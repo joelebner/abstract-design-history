@@ -174,9 +174,10 @@ export default function App() {
             <h2 className="vc-typography-overview">Overview</h2>
             <h3 className="vc-typography-section">Goals</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet libero
-              commodo, aliquet sem et, ullamcorper justo. Suspendisse porttitor congue leo sed
-              eleifend. Maecenas at rhoncus ex. Duis sit amet nisl tortor.
+              Redesign the Bank(TM) homepage hero to introduce One-Click App Payments to new and
+              returning visitors. The hero should communicate speed and simplicity, establish
+              trust, and drive account creation. Visual hierarchy should guide users from awareness
+              to action without friction.
             </p>
 
             <div className="vc-hero">
@@ -206,34 +207,21 @@ export default function App() {
 
             <h3 className="vc-typography-section">Proposal</h3>
             <p>
-              Proin blandit tincidunt iaculis. Suspendisse fermentum aliquam odio non sodales.
-              Suspendisse id hendrerit leo. Maecenas odio metus.
+              Explore two hero directions: one leading with the product name at large scale against
+              a clean, high-contrast background; a second using a lifestyle or device image to
+              ground the feature in everyday use. Both directions will include a headline, a single
+              supporting line, and a primary CTA. Typography and color should align with the
+              existing Bank(TM) brand system.
             </p>
-            <div className="vc-thumb-grid">
-              <div className="thumb">Artboard One</div>
-              <div className="thumb">Artboard Two</div>
-              <div className="thumb" />
-            </div>
 
             <h3 className="vc-typography-section">Details</h3>
             <p>
-              Donec fermentum a felis at tristique. Class aptent taciti sociosqu ad litora torquent
-              per conubia nostra, per inceptos himenaeos.
+              The final hero will be delivered at standard breakpoints (desktop, tablet, mobile).
+              Copy is intentionally minimal - headline under eight words, subhead under twenty. The
+              CTA button copies to "Create Account" across all variants. Assets will be handed off
+              as a Figma component with auto-layout enabled and copy fields marked as editable
+              instances.
             </p>
-            <div className="vc-thumb-grid">
-              <div className="thumb" />
-              <div className="vc-thumb-artboard-wrap">
-                <button
-                  type="button"
-                  className="thumb is-image vc-thumb-artboard"
-                  onClick={openLightbox}
-                  aria-label={`Open full view: ${ONE_CLICK_LIGHTBOX_TITLE}`}
-                >
-                  {ONE_CLICK_LIGHTBOX_TITLE}
-                </button>
-              </div>
-              <div className="thumb" />
-            </div>
           </section>
         </div>
       </main>
