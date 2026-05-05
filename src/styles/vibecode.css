@@ -1,0 +1,903 @@
+.vc-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #fff;
+}
+
+/*
+ * Left rail: fixed to the viewport (does not move with document scroll).
+ * Scroll inside `.vc-sidebar-body` is its own overflow — independent of body/main scrolling.
+ */
+.vc-sidebar {
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--vc-sidebar-width);
+  z-index: 10;
+  background: var(--vc-sidebar-bg);
+  border-right: 1px solid var(--ds-color-gray-30);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+/* Scrollable region only; keeps the account footer visually “sticky” to the bottom of the rail */
+.vc-sidebar-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+
+.vc-org {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vc-org-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.vc-org-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--ds-color-blurple-60);
+}
+
+/* Jump field uses `TextField` + `ds-text-field` tokens (Design System Text_Input) */
+.vc-jump-field {
+  width: 100%;
+}
+
+.vc-jump-field .ds-text-field {
+  width: 100%;
+}
+
+.vc-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vc-nav-group--dense {
+  gap: 1px;
+}
+
+.vc-nav-row {
+  border: none;
+  background: transparent;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: #2e2f30;
+  font-family: var(--ds-font-sans);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.vc-nav-row:hover:not(.is-active):not(:disabled) {
+  background: var(--vc-sidebar-nav-hover-bg);
+}
+
+.vc-nav-row:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-focus-ring);
+}
+
+.vc-nav-row.is-nested {
+  font-size: 13px;
+}
+
+.vc-nav-row.is-active {
+  background: #4c5fd5;
+  color: #fff;
+}
+
+.vc-nav-row.is-active:hover:not(:disabled) {
+  background: var(--ds-color-blurple-hover);
+}
+
+.vc-badge {
+  margin-left: auto;
+  font-size: 11px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2525a;
+  color: #fff;
+}
+
+.vc-section-title {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #8b8e8f;
+}
+
+.vc-project-title {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* Sticky to bottom of the rail: not in the scrollable `.vc-sidebar-body`; always visible */
+.vc-user-footer {
+  flex-shrink: 0;
+  border-top: 1px solid #ececec;
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.vc-main {
+  margin-left: var(--vc-sidebar-width);
+  background: var(--ds-color-white);
+  padding-block: var(--vc-main-padding-block-start) var(--vc-main-padding-block-end);
+  padding-inline: var(--vc-main-padding-inline);
+  min-width: 0;
+}
+
+/* Page header: title uses full-width centering context (same left edge as body .vc-doc); actions pinned to main right */
+.vc-page-header {
+  width: 100%;
+}
+
+.vc-page-header__shell {
+  position: relative;
+  width: 100%;
+}
+
+.vc-page-header__title.vc-doc {
+  box-sizing: border-box;
+  /* Reserve space so long titles don’t run under Share / icons */
+  padding-inline-end: clamp(120px, 28vw, 220px);
+}
+
+.vc-page-header__actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* One column for body content — hero, copy, and 3-up grids share this width */
+.vc-doc {
+  max-width: var(--vc-doc-max-width);
+  width: 100%;
+  margin-inline: auto;
+}
+
+/* Explicit classes avoid UA / global `header h1` rules from other stylesheets. */
+.vc-typography-notebook-title {
+  margin: 0;
+  padding: 0;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-vc-notebook-title-size);
+  font-weight: 700;
+  line-height: var(--ds-vc-heading-lh);
+  letter-spacing: var(--ds-vc-heading-track);
+  color: var(--ds-color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.vc-page-header__title p {
+  margin: 4px 0 0;
+  color: #8b8e8f;
+  font-size: 13px;
+}
+
+.vc-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.vc-icon-btn {
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--vc-header-icon-border);
+  border-radius: var(--vc-header-icon-radius);
+  background-color: var(--vc-header-icon-bg);
+  color: var(--ds-color-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.vc-icon-btn:hover:not(:disabled) {
+  background-color: var(--vc-header-icon-hover-bg);
+  border-color: var(--vc-header-icon-hover-border);
+}
+
+.vc-icon-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-focus-ring);
+}
+
+.vc-icon-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.vc-top-buttons {
+  margin-top: var(--vc-doc-subgap);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vc-reviews-stack {
+  margin-top: var(--vc-doc-subgap);
+}
+
+.vc-reviews-heading {
+  margin: 0 0 8px;
+  padding: 0;
+  font-family: var(--ds-font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.15px;
+  color: var(--ds-color-text);
+}
+
+.vc-review-card {
+  margin-top: 0;
+  border: none;
+  border-radius: 8px;
+  background: var(--ds-color-gray-10);
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.vc-review-left {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.vc-review-left div {
+  display: flex;
+  flex-direction: column;
+}
+
+.vc-review-left strong {
+  font-size: 14px;
+}
+
+.vc-review-left span {
+  font-size: 12px;
+  color: #696b6c;
+}
+
+.vc-faces {
+  display: flex;
+}
+
+.vc-faces span {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4c5fd5, #00be89);
+  border: 2px solid #fff;
+  margin-left: -6px;
+}
+
+.vc-content {
+  margin-top: var(--vc-content-after-chrome);
+}
+
+.vc-typography-overview {
+  margin: 0 0 8px;
+  padding: 0;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-vc-overview-size);
+  font-weight: 700;
+  line-height: var(--ds-vc-heading-lh);
+  letter-spacing: var(--ds-vc-heading-track);
+  color: var(--ds-color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.vc-typography-section {
+  margin-block-start: var(--vc-doc-block-gap);
+  margin-block-end: 8px;
+  margin-inline: 0;
+  padding: 0;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-vc-section-heading-size);
+  font-weight: 700;
+  line-height: var(--ds-vc-heading-lh);
+  letter-spacing: var(--ds-vc-heading-track);
+  color: var(--ds-color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tighter stack: “Goals” directly under “Overview” (Figma) */
+.vc-content > .vc-typography-overview + .vc-typography-section {
+  margin-block-start: 8px;
+}
+
+.vc-content p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: none;
+}
+
+.vc-hero {
+  --vc-hero-hit-z: 1;
+  --vc-hero-surface-z: 2;
+  position: relative;
+  isolation: isolate;
+  margin-top: var(--vc-doc-block-gap);
+  border-radius: 2px;
+  padding: 24px;
+  min-height: 290px;
+  background: linear-gradient(120deg, #ffffff 0%, #f1f8ff 44%, #fff6f6 100%);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  transition:
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+/* Invisible full-area control so the hero behaves like one large button (lightbox) */
+.vc-hero-hit {
+  position: absolute;
+  inset: 0;
+  z-index: var(--vc-hero-hit-z);
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: inherit;
+  background: transparent;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.vc-hero-hit:focus {
+  outline: none;
+}
+
+.vc-hero-hit:focus-visible {
+  outline: none;
+}
+
+.vc-hero:hover {
+  box-shadow: inset 0 0 0 1px var(--ds-color-blurple-40);
+  background: linear-gradient(120deg, #f8fbff 0%, #e8f2fc 44%, #fff2f2 100%);
+}
+
+.vc-hero:has(.vc-hero-hit:focus-visible) {
+  box-shadow: var(--ds-focus-ring);
+}
+
+.vc-hero-left {
+  position: relative;
+  z-index: var(--vc-hero-surface-z);
+  max-width: 410px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.vc-bank {
+  color: #0e2a80;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.vc-hero-title {
+  margin-top: 8px;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 0.95;
+}
+
+.vc-hero-text {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.vc-signup-card {
+  position: relative;
+  z-index: var(--vc-hero-surface-z);
+  width: 250px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #ececec;
+  padding: 12px;
+}
+
+.vc-signup-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.vc-input {
+  border: 1px solid #ececec;
+  height: 24px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+
+.vc-signup-card button {
+  width: 100%;
+  height: 28px;
+  border: 0;
+  border-radius: 3px;
+  background: #f6f7f7;
+}
+
+.vc-thumb-grid {
+  margin-top: var(--vc-doc-subgap);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.thumb {
+  min-height: 110px;
+  background: #ece9e7;
+  color: #8b8e8f;
+  font-size: 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+}
+
+.thumb.is-image {
+  background: linear-gradient(120deg, #fff, #eff7ff, #fff5f5);
+  color: #2e2f30;
+  font-weight: 700;
+  align-items: center;
+}
+
+/* Grid cell wrapper so the control always fills the cell (reliable hit target) */
+.vc-thumb-artboard-wrap {
+  position: relative;
+  min-height: 110px;
+  min-width: 0;
+  width: 100%;
+  align-self: stretch;
+}
+
+.vc-thumb-artboard-wrap button.vc-thumb-artboard.thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 110px;
+  margin: 0;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  text-align: center;
+  touch-action: manipulation;
+  z-index: 1;
+}
+
+.vc-thumb-artboard-wrap button.vc-thumb-artboard.thumb:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-focus-ring);
+}
+
+/* Artboard lightbox — modal over dimmed viewport */
+.vc-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+  padding: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.vc-lightbox {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: calc(100vw - 120px);
+  height: min(900px, calc(100dvh - 120px));
+  background: #f4f4f5;
+  color: var(--ds-color-text);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 24px 48px rgba(0, 0, 0, 0.18);
+}
+
+.vc-lightbox__topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  min-height: 64px;
+  padding: 16px 24px;
+  background: var(--ds-color-white);
+  border-bottom: 1px solid var(--ds-color-gray-30);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vc-lightbox__topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vc-lightbox__topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vc-lightbox__close {
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: var(--ds-color-gray-10);
+  color: var(--ds-color-gray-80);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.vc-lightbox__close:hover {
+  background: var(--ds-color-secondary-pressed);
+  color: var(--ds-color-text);
+}
+
+.vc-lightbox__ghost-btn:hover,
+.vc-lightbox__toggle-btn:hover {
+  background: var(--ds-color-secondary-pressed);
+  color: var(--ds-color-text);
+}
+
+.vc-lightbox__close:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-focus-ring);
+}
+
+.vc-lightbox__title {
+  margin: 0;
+  padding-right: 0;
+  font-family: var(--ds-font-sans);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.28px;
+  color: var(--ds-color-text);
+}
+
+.vc-lightbox__ghost-btn,
+.vc-lightbox__toggle-btn,
+.vc-lightbox__icon-btn,
+.vc-lightbox__primary-btn {
+  margin: 0;
+  border: none;
+  outline: none;
+  background: var(--ds-color-gray-10);
+  color: var(--ds-color-text);
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-family: var(--ds-font-sans);
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.vc-lightbox__toggle-btn span {
+  font-weight: 700;
+}
+
+.vc-lightbox__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  padding: 0;
+}
+
+.vc-lightbox__primary-btn {
+  border: 1px solid var(--ds-color-blurple-60);
+  background: var(--ds-color-blurple-60);
+  color: var(--ds-color-white);
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    color 0.12s ease;
+}
+
+/* Match inventory primary hover / pressed (see `.ds-button--primary.ds-button--state-default:hover`) */
+.vc-lightbox__primary-btn:hover:not(:disabled),
+.vc-lightbox__primary-btn:active:not(:disabled) {
+  background: var(--ds-color-blurple-pressed);
+  border-color: var(--ds-color-blurple-pressed);
+  color: var(--ds-color-white);
+}
+
+.vc-lightbox__primary-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-focus-ring);
+}
+
+.vc-lightbox__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 280px;
+}
+
+.vc-lightbox__history {
+  background: var(--ds-color-white);
+  border-right: 1px solid var(--ds-color-gray-30);
+  min-height: 0;
+}
+
+.vc-lightbox__history-list {
+  height: 100%;
+  overflow-y: auto;
+  padding-block: 0;
+}
+
+.vc-lightbox__history-row {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 8px 14px;
+  color: var(--ds-color-text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+}
+
+.vc-lightbox__history-row strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.vc-lightbox__history-row span {
+  display: block;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--ds-color-gray-60);
+}
+
+.vc-lightbox__history-row.is-active {
+  background: var(--ds-color-blurple-60);
+  color: var(--ds-color-white);
+}
+
+.vc-lightbox__history-row.is-active span {
+  color: var(--ds-color-white);
+}
+
+.vc-lightbox__bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.vc-lightbox__bubble img {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.vc-lightbox__history-row.is-active .vc-lightbox__bubble img {
+  filter: brightness(0) invert(1);
+}
+
+.vc-lightbox__canvas {
+  min-height: 0;
+  overflow: auto;
+  background: #ececee;
+  padding: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vc-lightbox__artboard {
+  width: min(760px, 100%);
+  background: var(--ds-color-white);
+  border: 1px solid var(--ds-color-gray-30);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.vc-lightbox__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.vc-lightbox__comments {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--ds-color-white);
+  border-left: 1px solid var(--ds-color-gray-30);
+}
+
+/* Scrolls under the composer; inner column flex + tail grows into leftover height */
+.vc-lightbox__comments-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-anchor: none;
+  background: var(--ds-color-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.vc-lightbox__version-block {
+  flex: 0 0 auto;
+  margin: 0;
+  width: 100%;
+  border-bottom: 1px solid var(--ds-color-gray-30);
+  opacity: 0.38;
+  transition: opacity 0.18s ease;
+}
+
+/* Absorbs extra vertical space below the last block (visible whitespace above composer) */
+.vc-lightbox__comments-tail {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  background: var(--ds-color-white);
+  pointer-events: none;
+}
+
+.vc-lightbox__version-block.is-selected {
+  opacity: 1;
+}
+
+.vc-lightbox__version-block:last-child {
+  border-bottom: none;
+}
+
+.vc-lightbox__comments-header {
+  border-bottom: 1px solid var(--ds-color-gray-30);
+  background: var(--ds-color-gray-10);
+  padding: 10px 12px;
+}
+
+.vc-lightbox__comments-header strong {
+  display: block;
+  font-size: 13px;
+}
+
+.vc-lightbox__comments-header span {
+  display: block;
+  font-size: 12px;
+  color: var(--ds-color-gray-60);
+}
+
+.vc-lightbox__thread {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  background: var(--ds-color-white);
+}
+
+.vc-lightbox__comment {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.vc-lightbox__comment p {
+  margin: 0 0 6px;
+}
+
+.vc-lightbox__comment p span {
+  color: var(--ds-color-gray-60);
+  font-size: 12px;
+}
+
+.vc-lightbox__reactions {
+  display: flex;
+  gap: 6px;
+}
+
+.vc-lightbox__reactions button {
+  margin: 0;
+  border: 1px solid var(--ds-color-gray-30);
+  border-radius: 999px;
+  background: var(--ds-color-gray-10);
+  font-size: 12px;
+  padding: 2px 8px;
+}
+
+.vc-lightbox__composer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--ds-color-gray-30);
+  background: var(--ds-color-white);
+  padding: 10px 12px;
+}
+
+.vc-lightbox__composer input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 34px;
+  border: 1px solid var(--ds-color-gray-30);
+  border-radius: 6px;
+  padding: 0 10px;
+  font-family: var(--ds-font-sans);
+}
+
+.vc-lightbox__composer-actions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

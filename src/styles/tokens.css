@@ -1,0 +1,104 @@
+/**
+ * Semantic tokens from Portfolio archive (Figma extraction).
+ * Gray, Blurple + Cherry ramps: Portfolio archive “Color” frame (node 3769:1740).
+ */
+:root {
+  --ds-color-white: #ffffff;
+
+  /* Gray scale */
+  --ds-color-gray-10: #f6f7f7;
+  --ds-color-gray-20: #dcdedf;
+  --ds-color-gray-30: #cbcecf;
+  --ds-color-gray-40: #adaeb0;
+  --ds-color-gray-50: #8b8e8f;
+  --ds-color-gray-60: #676d72;
+  --ds-color-gray-70: #4d5257;
+  --ds-color-gray-80: #33363c;
+  --ds-color-gray-90: #1e1b21;
+
+  --ds-color-blurple-10: #eef0fb;
+  --ds-color-blurple-20: #d4d9f5;
+  --ds-color-blurple-30: #b3bcee;
+  --ds-color-blurple-40: #8e9de5;
+  --ds-color-blurple-50: #6d7fdc;
+  --ds-color-blurple-60: #4c5fd5;
+  --ds-color-blurple-70: #3a4db8;
+  --ds-color-blurple-80: #2b3a8a;
+  --ds-color-blurple-90: #1c265c;
+  --ds-color-blurple-pressed: var(--ds-color-blurple-80);
+  --ds-color-blurple-hover: #3d4fc4;
+
+  --ds-color-secondary-pressed: #ececec;
+  --ds-color-text: #2e2f30;
+  --ds-color-text-secondary: #696b6c;
+  --ds-color-placeholder: #8b8e8f;
+  --ds-color-kelp-10: #f4f7f6;
+  --ds-color-kelp-20: #d8dedd;
+  --ds-color-kelp-60: #44736c;
+  --ds-color-cherry-10: #fef0f1;
+  --ds-color-cherry-20: #fcc8cb;
+  --ds-color-cherry-30: #f99098;
+  --ds-color-cherry-40: #f57078;
+  --ds-color-cherry-50: #f2525a;
+  --ds-color-cherry-60: #d21830;
+  --ds-color-cherry-70: #a8121f;
+  --ds-color-cherry-80: #7e0d17;
+  --ds-color-cherry-90: #520810;
+  --ds-color-green-50: #008762;
+  --ds-color-link: #4c5fd5;
+  --ds-color-yolk-20: #ffe496;
+
+  --ds-color-black-a10: rgba(0, 0, 0, 0.1);
+
+  --ds-radius-sm: 4px;
+  --ds-radius-md: 6px;
+  --ds-radius-pill: 9999px;
+  --ds-radius-input: 8px;
+
+  --ds-shadow-card: 0 0 1px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  --ds-focus-ring: 0 0 0 2px var(--ds-color-white), 0 0 0 4px var(--ds-color-blurple-60);
+
+  --ds-font-caption-size: 13px;
+  --ds-font-caption-lh: 18px;
+  --ds-font-body-m-size: 14px;
+  --ds-font-body-m-lh: 1.4;
+  --ds-font-body-m-weight: 400;
+  --ds-font-body-m-medium-weight: 500;
+  --ds-font-body-m-tracking: -0.0107em;
+  --ds-font-sans: "GTAmericaWeb", "GT America", "GT-America-Standard", system-ui, sans-serif;
+
+  /* Design History notebook body — GT America Bold (see Figma type ramp) */
+  --ds-vc-notebook-title-size: 32px;
+  --ds-vc-overview-size: 28px;
+  --ds-vc-section-heading-size: 20px;
+  --ds-vc-heading-lh: 1.2;
+  --ds-vc-heading-track: -0.02em;
+
+  /* Notebook document column — hero, copy, and 3-up grids share this width */
+  --vc-doc-max-width: 980px;
+
+  /* Left nav rail — subtle panel behind org + nav (vs white canvas) */
+  --vc-sidebar-width: 280px;
+  --vc-sidebar-bg: var(--ds-color-gray-10);
+  /* Nav row hover (Home … Ideation Process) — one step darker than rail */
+  --vc-sidebar-nav-hover-bg: var(--ds-color-gray-20);
+
+  /* Header icon wells — match ds-button secondary + state-up (same as Share chip) */
+  --vc-header-icon-bg: var(--ds-color-gray-10);
+  --vc-header-icon-border: var(--ds-color-gray-10);
+  --vc-header-icon-radius: var(--ds-radius-md);
+  --vc-header-icon-hover-bg: #ececec;
+  --vc-header-icon-hover-border: #ececec;
+
+  /* Main column (white body): outer inset */
+  --vc-main-padding-block-start: 24px;
+  --vc-main-padding-block-end: 48px;
+  --vc-main-padding-inline: 24px;
+
+  /* Space below title/actions/review strip before Overview / doc body */
+  --vc-content-after-chrome: 28px;
+
+  /* Major blocks inside doc (hero vs sections, grids vs next heading) */
+  --vc-doc-block-gap: 24px;
+  --vc-doc-subgap: 16px;
+}
