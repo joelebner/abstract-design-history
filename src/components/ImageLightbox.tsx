@@ -146,6 +146,7 @@ export function ImageLightbox({ open, onClose, title, imageSrc, imageAlt }: Imag
   useEffect(() => {
     if (!open) {
       skipNextRailScroll.current = true;
+      setActiveVersionIdx(0);
     }
   }, [open]);
 
