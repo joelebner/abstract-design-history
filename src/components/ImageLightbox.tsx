@@ -109,6 +109,39 @@ export function ImageLightbox({ open, onClose, title, imageSrc, imageAlt }: Imag
   /** After open, skip the first scroll run (default selection already at top). */
   const skipNextRailScroll = useRef(true);
   const [activeVersionIdx, setActiveVersionIdx] = useState(0);
+  const [commentsTailHeight, setCommentsTailHeight] = useState(0);
+  const [isRailDragging, setIsRailDragging] = useState(false);
+  const railDragThresholdPx = 4;
+  const dragPointerIdRef = useRef<number | null>(null);
+  const dragStartYRef = useRef(0);
+  const dragStartScrollTopRef = useRef(0);
+  const suppressNextRailBlockClickRef = useRef(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const container = commentsBodyRef.current;
+    if (!container) return;
+    const updateTailHeight = () => {
+      // Add scroll slack equal to viewport height so any version header can snap to top.
+      setCommentsTailHeight(container.clientHeight);
+    };
+    updateTailHeight();
+    const observer = new ResizeObserver(updateTailHeight);
+    observer.observe(container);
+    window.addEventListener("resize", updateTailHeight);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateTailHeight);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) {
+      dragPointerIdRef.current = null;
+      suppressNextRailBlockClickRef.current = false;
+      setIsRailDragging(false);
+    }
+  }, [open]);
 
   useEffect(() => {
     if (!open) {
@@ -240,7 +273,87 @@ export function ImageLightbox({ open, onClose, title, imageSrc, imageAlt }: Imag
           </main>
 
           <aside className="vc-lightbox__comments">
-            <div ref={commentsBodyRef} className="vc-lightbox__comments-body">
+            <div
+              ref={commentsBodyRef}
+              className={[
+                "vc-lightbox__comments-body",
+                isRailDragging && "is-dragging",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+              onClick={(e) => {
+                if (suppressNextRailBlockClickRef.current) {
+                  suppressNextRailBlockClickRef.current = false;
+                  return;
+                }
+                const target = e.target as HTMLElement;
+                const block = target.closest<HTMLElement>(".vc-lightbox__version-block");
+                if (!block) return;
+                const idx = block.dataset.versionRowIndex;
+                if (typeof idx !== "string") return;
+                const parsed = Number.parseInt(idx, 10);
+                if (Number.isNaN(parsed)) return;
+                setActiveVersionIdx(parsed);
+              }}
+              onPointerDown={(e) => {
+                if (e.button !== 0) return;
+                const target = e.target as HTMLElement;
+                if (
+                  target.closest(".vc-lightbox__composer, button, input, textarea, a")
+                ) {
+                  return;
+                }
+                const container = commentsBodyRef.current;
+                if (!container) return;
+                dragPointerIdRef.current = e.pointerId;
+                dragStartYRef.current = e.clientY;
+                dragStartScrollTopRef.current = container.scrollTop;
+                suppressNextRailBlockClickRef.current = false;
+                container.setPointerCapture(e.pointerId);
+              }}
+              onPointerMove={(e) => {
+                if (dragPointerIdRef.current !== e.pointerId) return;
+                const container = commentsBodyRef.current;
+                if (!container) return;
+                const deltaY = e.clientY - dragStartYRef.current;
+                if (Math.abs(deltaY) >= railDragThresholdPx) {
+                  suppressNextRailBlockClickRef.current = true;
+                  if (!isRailDragging) setIsRailDragging(true);
+                }
+                container.scrollTop = dragStartScrollTopRef.current - deltaY;
+              }}
+              onPointerUp={(e) => {
+                const container = commentsBodyRef.current;
+                if (dragPointerIdRef.current !== e.pointerId || !container) return;
+                if (!suppressNextRailBlockClickRef.current) {
+                  const elAtPoint = document.elementFromPoint(e.clientX, e.clientY) as
+                    | HTMLElement
+                    | null;
+                  const block = elAtPoint?.closest<HTMLElement>(".vc-lightbox__version-block");
+                  const idx = block?.dataset.versionRowIndex;
+                  if (typeof idx === "string") {
+                    const parsed = Number.parseInt(idx, 10);
+                    if (!Number.isNaN(parsed)) setActiveVersionIdx(parsed);
+                  }
+                }
+                if (container.hasPointerCapture(e.pointerId)) {
+                  container.releasePointerCapture(e.pointerId);
+                }
+                dragPointerIdRef.current = null;
+                suppressNextRailBlockClickRef.current = false;
+                setIsRailDragging(false);
+              }}
+              onPointerCancel={(e) => {
+                const container = commentsBodyRef.current;
+                if (dragPointerIdRef.current !== e.pointerId || !container) return;
+                if (container.hasPointerCapture(e.pointerId)) {
+                  container.releasePointerCapture(e.pointerId);
+                }
+                dragPointerIdRef.current = null;
+                suppressNextRailBlockClickRef.current = false;
+                setIsRailDragging(false);
+              }}
+            >
               {RAIL_VERSION_BLOCKS.map((block, blockIdx) => {
                 const isSelected = block.versionRowIndex === activeVersionIdx;
                 return (
@@ -250,12 +363,22 @@ export function ImageLightbox({ open, onClose, title, imageSrc, imageAlt }: Imag
                     if (node) versionBlockRefs.current.set(block.versionRowIndex, node);
                     else versionBlockRefs.current.delete(block.versionRowIndex);
                   }}
+                  data-version-row-index={block.versionRowIndex}
+                  role="button"
+                  tabIndex={0}
                   className={[
                     "vc-lightbox__version-block",
                     isSelected && "is-selected",
                   ]
                     .filter(Boolean)
                     .join(" ")}
+                  aria-pressed={isSelected}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActiveVersionIdx(block.versionRowIndex);
+                    }
+                  }}
                 >
                   <div className="vc-lightbox__comments-header">
                     <strong>{block.uploadTimestamp}</strong>
@@ -284,7 +407,11 @@ export function ImageLightbox({ open, onClose, title, imageSrc, imageAlt }: Imag
                 );
               })}
               {/* Fills unused rail height below comment blocks so “null” whitespace is real layout, not background-only */}
-              <div className="vc-lightbox__comments-tail" aria-hidden />
+              <div
+                className="vc-lightbox__comments-tail"
+                style={{ height: `${commentsTailHeight}px` }}
+                aria-hidden
+              />
             </div>
 
             <div className="vc-lightbox__composer">

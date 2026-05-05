@@ -709,6 +709,10 @@
   cursor: pointer;
 }
 
+.vc-lightbox__history-row:hover:not(.is-active) {
+  background: var(--ds-color-gray-10);
+}
+
 .vc-lightbox__history-row strong {
   display: block;
   font-size: 13px;
@@ -796,6 +800,12 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
+  cursor: grab;
+}
+
+.vc-lightbox__comments-body.is-dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .vc-lightbox__version-block {
@@ -803,14 +813,15 @@
   margin: 0;
   width: 100%;
   border-bottom: 1px solid var(--ds-color-gray-30);
-  opacity: 0.38;
+  opacity: 0.3;
+  cursor: pointer;
   transition: opacity 0.18s ease;
 }
 
 /* Absorbs extra vertical space below the last block (visible whitespace above composer) */
 .vc-lightbox__comments-tail {
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: 0 0 auto;
+  min-height: 1px;
   width: 100%;
   background: var(--ds-color-white);
   pointer-events: none;
@@ -818,6 +829,15 @@
 
 .vc-lightbox__version-block.is-selected {
   opacity: 1;
+}
+
+.vc-lightbox__version-block:hover:not(.is-selected) {
+  opacity: 0.5;
+}
+
+.vc-lightbox__version-block:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-focus-ring);
 }
 
 .vc-lightbox__version-block:last-child {
