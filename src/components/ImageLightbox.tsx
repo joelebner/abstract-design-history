@@ -9,6 +9,7 @@ export type ImageLightboxProps = {
   title: string;
   imageSrc?: string;
   imageAlt?: string;
+  versionImageSrcs?: string[];
 };
 
 type VersionRow = {
@@ -101,7 +102,14 @@ const VERSION_ROWS: VersionRow[] = [
 ];
 
 /** Centered modal over a dimmed backdrop; body scroll locked while open. */
-export function ImageLightbox({ open, onClose, title, imageSrc, imageAlt }: ImageLightboxProps) {
+export function ImageLightbox({
+  open,
+  onClose,
+  title,
+  imageSrc,
+  imageAlt,
+  versionImageSrcs,
+}: ImageLightboxProps) {
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const commentsBodyRef = useRef<HTMLDivElement>(null);
@@ -189,6 +197,8 @@ export function ImageLightbox({ open, onClose, title, imageSrc, imageAlt }: Imag
 
   if (!open) return null;
 
+  const activeImageSrc = versionImageSrcs?.[activeVersionIdx] ?? imageSrc;
+
   return createPortal(
     <div
       className="vc-lightbox-backdrop"
@@ -262,10 +272,10 @@ export function ImageLightbox({ open, onClose, title, imageSrc, imageAlt }: Imag
 
           <main className="vc-lightbox__canvas">
             <div className="vc-lightbox__artboard">
-              {imageSrc ? (
+              {activeImageSrc ? (
                 <img
                   className="vc-lightbox__image"
-                  src={imageSrc}
+                  src={activeImageSrc}
                   alt={imageAlt ?? title}
                   loading="eager"
                 />

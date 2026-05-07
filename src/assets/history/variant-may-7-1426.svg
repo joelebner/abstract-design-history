@@ -1,0 +1,28 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='976' height='294' viewBox='0 0 976 294'>
+<defs><linearGradient id='bgGrad' x1='0%' y1='0%' x2='100%' y2='0%'>
+  <stop offset='0%' stop-color='#FFFFFF'/>
+  <stop offset='44%' stop-color='#F1F8FF'/>
+  <stop offset='100%' stop-color='#FFF6F6'/>
+</linearGradient></defs>
+<rect x='0' y='0' width='976' height='294' fill='url(#bgGrad)'/>
+<g>
+  <text x='18' y='42' font-family='Arial, Helvetica, sans-serif' font-size='24' font-style='italic' font-weight='700' fill='#0E2A80'>Bank(TM)</text>
+  <text x='18' y='132' font-family='Arial, Helvetica, sans-serif' font-size='50' font-weight='700' fill='#2E2F30'>
+    <tspan x='18' dy='0'>One-Click Payments</tspan><tspan x='18' dy='56'>for Every Business</tspan>
+  </text>
+  <text x='18' y='252' font-family='Arial, Helvetica, sans-serif' font-size='14' fill='#2E2F30'>
+    <tspan x='18' dy='0'>Businesses everywhere are simplifying payments with</tspan><tspan x='18' dy='22'>Bank(TM) One-Click.</tspan>
+  </text>
+</g>
+<g>
+  <rect x='700' y='26' width='254' height='242' rx='6' ry='6' fill='#FFFFFF' stroke='#ECECEC'/>
+  <text x='715' y='58' font-family='Arial, Helvetica, sans-serif' font-size='15' fill='#2E2F30'>
+    <tspan x='715' dy='0'>Sign up for Bank(TM)</tspan>
+  </text>
+  <rect x='715' y='82' width='224' height='34' rx='3' ry='3' fill='#FFFFFF' stroke='#ECECEC'/>
+  <rect x='715' y='123' width='224' height='34' rx='3' ry='3' fill='#FFFFFF' stroke='#ECECEC'/>
+  <rect x='715' y='164' width='224' height='34' rx='3' ry='3' fill='#FFFFFF' stroke='#ECECEC'/>
+  <rect x='715' y='209' width='224' height='38' rx='3' ry='3' fill='#F6F7F7' stroke='#E5E7EB'/>
+  <text x='827' y='234' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='600' fill='#2E2F30'>Create</text>
+</g>
+</svg>

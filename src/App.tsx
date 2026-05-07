@@ -13,7 +13,14 @@ import teamIcon from "./assets/icons16/Icon/16/Team.svg";
 import flagIcon from "./assets/icons16/Icon/16/Flag.svg";
 import notebookStatusIcon from "./assets/icons16/Icon/16/Notebook Status.svg";
 import overflowIcon from "./assets/icons16/Icon/16/Overflow Menu.svg";
-import oneClickLightboxImage from "./assets/one-click-lightbox.png";
+import variantMay101811 from "./assets/history/variant-may-10-1811.svg";
+import variantMay91108 from "./assets/history/variant-may-9-1108.svg";
+import variantMay90734 from "./assets/history/variant-may-9-0734.svg";
+import variantMay71612 from "./assets/history/variant-may-7-1612.svg";
+import variantMay71426 from "./assets/history/variant-may-7-1426.svg";
+import variantMay41734 from "./assets/history/variant-may-4-1734.svg";
+import variantMay41108 from "./assets/history/variant-may-4-1108.svg";
+import variantMay20734 from "./assets/history/variant-may-2-0734.svg";
 
 type NavItem = { label: string; icon: string; active?: boolean; badge?: string };
 
@@ -52,6 +59,16 @@ function NavRow({ item, nested = false }: { item: NavItem; nested?: boolean }) {
 }
 
 const ONE_CLICK_LIGHTBOX_TITLE = "One-Click App Payments";
+const LIGHTBOX_VERSION_IMAGE_SRCS = [
+  variantMay101811, // May 10 • 6:11 pm
+  variantMay91108, // May 9 • 11:08 am (duplicated from May 10)
+  variantMay90734, // May 9 • 7:34 am
+  variantMay71612, // May 7 • 4:12 pm
+  variantMay71426, // May 7 • 2:26 pm
+  variantMay41734, // May 4 • 5:34 pm
+  variantMay41108, // May 4 • 11:08 am
+  variantMay20734, // May 2 • 7:34 am
+];
 
 export default function App() {
   const [jumpQuery, setJumpQuery] = useState("");
@@ -188,21 +205,12 @@ export default function App() {
                 aria-label={`Open full view: ${ONE_CLICK_LIGHTBOX_TITLE}`}
                 onClick={openLightbox}
               />
-              <div className="vc-hero-left">
-                <div className="vc-bank">Bank(TM)</div>
-                <div className="vc-hero-title">One-Click App Payments</div>
-                <div className="vc-hero-text">
-                  Companies of all sizes, from all over the world, are using Bank(TM)'s new One-Click
-                  payments.
-                </div>
-              </div>
-              <div className="vc-signup-card">
-                <div className="vc-signup-title">Sign up for Bank(TM)</div>
-                <div className="vc-input" />
-                <div className="vc-input" />
-                <div className="vc-input" />
-                <button type="button">Create Account</button>
-              </div>
+              <img
+                className="vc-hero-preview-image"
+                src={variantMay101811}
+                alt={ONE_CLICK_LIGHTBOX_TITLE}
+                loading="eager"
+              />
             </div>
 
             <h3 className="vc-typography-section">Proposal</h3>
@@ -230,8 +238,9 @@ export default function App() {
         open={lightboxOpen}
         onClose={closeLightbox}
         title={ONE_CLICK_LIGHTBOX_TITLE}
-        imageSrc={oneClickLightboxImage}
+        imageSrc={variantMay101811}
         imageAlt={ONE_CLICK_LIGHTBOX_TITLE}
+        versionImageSrcs={LIGHTBOX_VERSION_IMAGE_SRCS}
       />
     </div>
   );
